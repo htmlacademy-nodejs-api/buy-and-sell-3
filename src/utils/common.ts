@@ -16,3 +16,6 @@ export const createOffer = (row: string) => {
     user: {email, firstname, lastname, avatarPath},
   } as Offer;
 };
+
+export const getErrorMessage = (error: unknown): string =>
+  error instanceof Error ? error.message : '';
