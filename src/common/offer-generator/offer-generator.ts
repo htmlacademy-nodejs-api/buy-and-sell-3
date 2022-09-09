@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { MockData } from '../../types/mock-data.type.js';
 import { OfferType } from '../../types/offer-type.enum.js';
 import { generateRandomValue, getRandomItem, getRandomItems } from '../../utils/random.js';
@@ -5,6 +6,9 @@ import { OfferGeneratorInterface } from './offer-generator.interface.js';
 
 const MIN_PRICE = 500;
 const MAX_PRICE = 2000;
+
+const FIRST_WEEK_DAY = 1;
+const LAST_WEEK_DAY = 7;
 
 export default class OfferGenerator implements OfferGeneratorInterface {
   constructor(private readonly mockData: MockData) {}
@@ -19,11 +23,12 @@ export default class OfferGenerator implements OfferGeneratorInterface {
     const author = getRandomItem<string>(this.mockData.users);
     const email = getRandomItem<string>(this.mockData.emails);
     const avatar = getRandomItem<string>(this.mockData.avatars);
+    const createdDate = dayjs().subtract(generateRandomValue(FIRST_WEEK_DAY, LAST_WEEK_DAY), 'day').toISOString();
 
     const [firstname, lastname] = author.split(' ');
 
     return [
-      title, description,
+      title, description, createdDate,
       photo, type, price, categories,
       firstname, lastname, email, avatar,
     ].join('\t');
