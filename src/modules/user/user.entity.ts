@@ -3,6 +3,8 @@ import typegoose, {getModelForClass, defaultClasses} from '@typegoose/typegoose'
 
 const {prop} = typegoose;
 
+export interface UserEntity extends defaultClasses.Base {}
+
 export class UserEntity extends defaultClasses.TimeStamps implements User {
   @prop({ unique: true, required: true })
   public email!: string;
