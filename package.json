@@ -38,6 +38,7 @@
     "npm": "8.19.2"
   },
   "dependencies": {
+    "@typegoose/typegoose": "9.13.2",
     "convict": "6.2.3",
     "convict-format-with-validator": "6.2.0",
     "dayjs": "1.11.7",
