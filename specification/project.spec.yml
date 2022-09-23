@@ -1,0 +1,9 @@
+openapi: 3.1.0
+info:
+  title: API сервер для демо-проекта «Куплю. Продам».
+  description: |-
+    * Список ресурсов и маршрутов сервера «Куплю. Продам».
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 2.0.0
