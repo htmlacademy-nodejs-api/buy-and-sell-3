@@ -36,4 +36,8 @@ export default class CategoryService implements CategoryServiceInterface {
 
     return this.create(dto);
   }
+
+  public async find(): Promise<DocumentType<CategoryEntity>[]> {
+    return this.categoryModel.find();
+  }
 }
