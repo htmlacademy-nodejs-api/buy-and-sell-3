@@ -6,6 +6,8 @@ import {LoggerInterface} from '../../common/logger/logger.interface.js';
 import {HttpMethod} from '../../types/http-method.enum.js';
 import {CategoryServiceInterface} from './category-service.interface.js';
 import {StatusCodes} from 'http-status-codes';
+import CategoryResponse from './response/category.response.js';
+import {fillDTO} from '../../utils/common.js';
 
 @injectable()
 export default class CategoryController extends Controller {
@@ -23,7 +25,8 @@ export default class CategoryController extends Controller {
 
   public async index(_req: Request, res: Response): Promise<void> {
     const categories = await this.categoryService.find();
-    this.send(res, StatusCodes.OK, categories);
+    const categoryResponse = fillDTO(CategoryResponse, categories);
+    this.send(res, StatusCodes.OK, categoryResponse);
   }
 
   public create(_req: Request, _res: Response): void {
