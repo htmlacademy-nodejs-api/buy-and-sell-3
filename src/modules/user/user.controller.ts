@@ -20,13 +20,9 @@ export default class UserController extends Controller {
   public async create(
     _req: Request<Record<string, unknown>, Record<string, unknown>, CreateUserDto>,
     _res: Response,
-    next: NextFunction
+    _next: NextFunction
   ): Promise<void> {
 
-    try {
-      throw new Error('[UserController] Oops');
-    } catch (error) {
-      return next(error);
-    }
+    throw new Error('[UserController] Oops');
   }
 }
