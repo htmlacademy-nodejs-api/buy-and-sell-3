@@ -9,6 +9,7 @@ import {StatusCodes} from 'http-status-codes';
 import CategoryResponse from './response/category.response.js';
 import {fillDTO} from '../../utils/common.js';
 import CreateCategoryDto from './dto/create-category.dto.js';
+import HttpError from '../../common/errors/http-error.js';
 
 @injectable()
 export default class CategoryController extends Controller {
@@ -37,9 +38,11 @@ export default class CategoryController extends Controller {
     const existCategory = await this.categoryService.findByCategoryName(body.name);
 
     if (existCategory) {
-      const errorMessage = `Category with name «${body.name}» exists.`;
-      this.send(res, StatusCodes.UNPROCESSABLE_ENTITY, {error: errorMessage});
-      return this.logger.error(errorMessage);
+      throw new HttpError(
+        StatusCodes.UNPROCESSABLE_ENTITY,
+        `Category with name «${body.name}» exists.`,
+        'CategoryController'
+      );
     }
 
     const result = await this.categoryService.create(body);
