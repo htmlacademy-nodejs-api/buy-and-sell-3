@@ -4,10 +4,14 @@ import {Controller} from '../../common/controller/controller.js';
 import {Component} from '../../types/component.types.js';
 import {LoggerInterface} from '../../common/logger/logger.interface.js';
 import {HttpMethod} from '../../types/http-method.enum.js';
+import {CategoryServiceInterface} from './category-service.interface.js';
+import {StatusCodes} from 'http-status-codes';
 
 @injectable()
 export default class CategoryController extends Controller {
-  constructor(@inject(Component.LoggerInterface) logger: LoggerInterface
+  constructor(
+    @inject(Component.LoggerInterface) logger: LoggerInterface,
+    @inject(Component.CategoryServiceInterface) private readonly categoryService: CategoryServiceInterface,
   ) {
     super(logger);
 
@@ -17,11 +21,12 @@ export default class CategoryController extends Controller {
     this.addRoute({path: '/', method: HttpMethod.Post, handler: this.create});
   }
 
-  public index(req: Request, res: Response): void {
-    // Код обработчика
+  public async index(_req: Request, res: Response): Promise<void> {
+    const categories = await this.categoryService.find();
+    this.send(res, StatusCodes.OK, categories);
   }
 
-  public create(req: Request, res: Response): void {
+  public create(_req: Request, _res: Response): void {
     // Код обработчика
   }
 }
