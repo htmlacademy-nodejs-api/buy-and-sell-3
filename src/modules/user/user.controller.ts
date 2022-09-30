@@ -3,7 +3,7 @@ import {inject, injectable} from 'inversify';
 import {Component} from '../../types/component.types.js';
 import {LoggerInterface} from '../../common/logger/logger.interface.js';
 import {HttpMethod} from '../../types/http-method.enum.js';
-import {Request, Response} from 'express';
+import {NextFunction, Request, Response} from 'express';
 import CreateUserDto from './dto/create-user.dto.js';
 
 @injectable()
@@ -19,8 +19,14 @@ export default class UserController extends Controller {
 
   public async create(
     _req: Request<Record<string, unknown>, Record<string, unknown>, CreateUserDto>,
-    _res: Response
+    _res: Response,
+    next: NextFunction
   ): Promise<void> {
-    throw new Error('[UserController] Oops');
+
+    try {
+      throw new Error('[UserController] Oops');
+    } catch (error) {
+      return next(error);
+    }
   }
 }
