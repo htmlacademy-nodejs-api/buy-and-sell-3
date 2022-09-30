@@ -17,10 +17,10 @@ export default class UserController extends Controller {
     this.addRoute({path: '/register', method: HttpMethod.Post, handler: this.create});
   }
 
-  public create(
+  public async create(
     _req: Request<Record<string, unknown>, Record<string, unknown>, CreateUserDto>,
     _res: Response
-  ): void {
+  ): Promise<void> {
     throw new Error('[UserController] Oops');
   }
 }
