@@ -14,6 +14,7 @@ import * as core from 'express-serve-static-core';
 import {OfferServiceInterface} from '../offer/offer-service.interface.js';
 import OfferResponse from '../offer/response/offer.response.js';
 import {RequestQuery} from '../../types/request-query.type.js';
+import { ValidateObjectIdMiddleware } from '../../common/middlewares/validate-objectid.middleware.js';
 
 
 type ParamsGetCategory = {
@@ -33,7 +34,12 @@ export default class CategoryController extends Controller {
 
     this.addRoute({path: '/', method: HttpMethod.Get, handler: this.index});
     this.addRoute({path: '/', method: HttpMethod.Post, handler: this.create});
-    this.addRoute({path: '/:categoryId/offers', method: HttpMethod.Get, handler: this.getOffersFromCategory});
+    this.addRoute({
+      path: '/:categoryId/offers',
+      method: HttpMethod.Get,
+      handler: this.getOffersFromCategory,
+      middlewares: [new ValidateObjectIdMiddleware('categoryId')]
+    });
   }
 
   public async index(_req: Request, res: Response): Promise<void> {
