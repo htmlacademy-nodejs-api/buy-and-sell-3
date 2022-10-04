@@ -49,3 +49,10 @@ Content-Type: application/json
 }
 
 ###
+
+# Объявления
+## Объявление по идентификатору
+
+GET http://localhost:4000/offers/62711a50b0e24a624d49ffdc HTTP/1.1
+
+###

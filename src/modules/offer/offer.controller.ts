@@ -1,16 +1,23 @@
 import {inject, injectable} from 'inversify';
 import {StatusCodes} from 'http-status-codes';
 import {Request, Response} from 'express';
+import * as core from 'express-serve-static-core';
 import {Controller} from '../../common/controller/controller.js';
 import {Component} from '../../types/component.types.js';
 import {LoggerInterface} from '../../common/logger/logger.interface.js';
 import {HttpMethod} from '../../types/http-method.enum.js';
 import HttpError from '../../common/errors/http-error.js';
+import {OfferServiceInterface} from './offer-service.interface.js';
+
+type ParamsGetOffer = {
+  offerId: string;
+}
 
 @injectable()
 export default class OfferController extends Controller {
   constructor(
     @inject(Component.LoggerInterface) logger: LoggerInterface,
+    @inject(Component.OfferServiceInterface) private readonly offerService: OfferServiceInterface,
   ) {
     super(logger);
 
@@ -18,11 +25,21 @@ export default class OfferController extends Controller {
     this.addRoute({path: '/:offerId', method: HttpMethod.Get, handler: this.show});
   }
 
-  public async show(_req: Request, _res: Response): Promise<void> {
-    throw new HttpError(
-      StatusCodes.NOT_IMPLEMENTED,
-      'Not implemented',
-      'OfferController'
-    );
+  public async show(
+    {params}: Request<core.ParamsDictionary | ParamsGetOffer>,
+    res: Response
+  ): Promise<void> {
+    const {offerId} = params;
+    const offer = await this.offerService.findById(offerId);
+
+    if (!offer) {
+      throw new HttpError(
+        StatusCodes.NOT_FOUND,
+        `Offer with id ${offerId} not found.`,
+        'OfferController'
+      );
+    }
+
+    this.ok(res, offer);
   }
 }
