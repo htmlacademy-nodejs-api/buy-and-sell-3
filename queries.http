@@ -81,3 +81,9 @@ Content-Type: application/json
 
 ###
 
+## Удаление объявления
+
+DELETE http://localhost:4000/offers/62825028a75295825778ac80 HTTP/1.1
+
+###
+
