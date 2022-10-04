@@ -106,3 +106,14 @@ Content-Type: application/json
 
 ###
 
+## Создать комментарий
+POST http://localhost:4000/comments HTTP/1.1
+Content-Type: application/json
+
+{
+  "text": "Как обстоят дела с коробками? Фирменная упаковка сохранена?",
+  "offerId": "628a27d729c45f2bf9f6806a",
+  "userId": "628a27d729c45f2bf9f67ff2"
+}
+
+###
