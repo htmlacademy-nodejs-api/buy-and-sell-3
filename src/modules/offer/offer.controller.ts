@@ -25,6 +25,7 @@ export default class OfferController extends Controller {
 
     this.logger.info('Register routes for OfferController…');
     this.addRoute({path: '/:offerId', method: HttpMethod.Get, handler: this.show});
+    this.addRoute({path: '/', method: HttpMethod.Get, handler: this.index});
   }
 
   public async show(
@@ -43,5 +44,10 @@ export default class OfferController extends Controller {
     }
 
     this.ok(res, fillDTO(OfferResponse, offer));
+  }
+
+  public async index(_req: Request, res: Response) {
+    const offers = await this.offerService.find();
+    this.ok(res, fillDTO(OfferResponse, offers));
   }
 }
