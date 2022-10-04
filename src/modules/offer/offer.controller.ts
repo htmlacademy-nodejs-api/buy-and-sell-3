@@ -8,6 +8,8 @@ import {LoggerInterface} from '../../common/logger/logger.interface.js';
 import {HttpMethod} from '../../types/http-method.enum.js';
 import HttpError from '../../common/errors/http-error.js';
 import {OfferServiceInterface} from './offer-service.interface.js';
+import {fillDTO} from '../../utils/common.js';
+import OfferResponse from './response/offer.response.js';
 
 type ParamsGetOffer = {
   offerId: string;
@@ -40,6 +42,6 @@ export default class OfferController extends Controller {
       );
     }
 
-    this.ok(res, offer);
+    this.ok(res, fillDTO(OfferResponse, offer));
   }
 }
