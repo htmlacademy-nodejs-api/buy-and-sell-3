@@ -56,6 +56,12 @@ Content-Type: application/json
 
 ###
 
+## Проверка токена пользователя
+GET http://localhost:4000/users/login HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5uZXQiLCJpZCI6IjYyOTM0MDgyZDFlMDU5MDBlMmVmYWVjMyIsImlhdCI6MTY1MzkwMzA1OSwiZXhwIjoxNjU0MDc1ODU5fQ.yMN3DID7PoMO1I4-fgwjGVWjdfnpQsCA8TL02APb-rU
+
+###
+
 # Объявления
 ## Объявление по идентификатору
 
