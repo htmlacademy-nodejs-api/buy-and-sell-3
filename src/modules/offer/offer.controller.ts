@@ -16,6 +16,7 @@ import { ValidateObjectIdMiddleware } from '../../common/middlewares/validate-ob
 import { DEFAULT_DISCUSSED_OFFER_COUNT, DEFAULT_NEW_OFFER_COUNT } from './offer.constant.js';
 import { ValidateDtoMiddleware } from '../../common/middlewares/validate-dto.middleware.js';
 import {DocumentExistsMiddleware} from '../../common/middlewares/document-exists.middleware.js';
+import {PrivateRouteMiddleware} from '../../common/middlewares/private-route.middleware.js';
 
 type ParamsGetOffer = {
   offerId: string;
@@ -45,7 +46,10 @@ export default class OfferController extends Controller {
       path: '/',
       method: HttpMethod.Post,
       handler: this.create,
-      middlewares: [new ValidateDtoMiddleware(CreateOfferDto)]
+      middlewares: [
+        new PrivateRouteMiddleware(),
+        new ValidateDtoMiddleware(CreateOfferDto)
+      ]
     });
     this.addRoute({path: '/bundles/new', method: HttpMethod.Get, handler: this.getNew});
     this.addRoute({path: '/bundles/discussed', method: HttpMethod.Get, handler: this.getDiscussed});
@@ -54,6 +58,7 @@ export default class OfferController extends Controller {
       method: HttpMethod.Delete,
       handler: this.delete,
       middlewares: [
+        new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('offerId'),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
       ]
@@ -63,6 +68,7 @@ export default class OfferController extends Controller {
       method: HttpMethod.Patch,
       handler: this.update,
       middlewares: [
+        new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('offerId'),
         new ValidateDtoMiddleware(UpdateOfferDto),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
