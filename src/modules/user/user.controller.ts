@@ -98,7 +98,10 @@ export default class UserController extends Controller {
       { email: user.email, id: user.id}
     );
 
-    this.ok(res, fillDTO(LoggedUserResponse, {email: user.email, token}));
+    this.ok(res, {
+      ...fillDTO(LoggedUserResponse, user),
+      token
+    });
   }
 
   public async uploadAvatar(req: Request, res: Response) {
@@ -108,6 +111,14 @@ export default class UserController extends Controller {
   }
 
   public async checkAuthenticate(req: Request, res: Response) {
+    if (! req.user) {
+      throw new HttpError(
+        StatusCodes.UNAUTHORIZED,
+        'Unauthorized',
+        'UserController'
+      );
+    }
+
     const user = await this.userService.findByEmail(req.user.email);
 
     // Можно добавить проверку, что `findByEmail` действительно
