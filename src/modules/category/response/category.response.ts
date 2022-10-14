@@ -6,4 +6,10 @@ export default class CategoryResponse {
 
   @Expose()
   public name!: string;
+
+  @Expose()
+  public offerCount!: string;
+
+  @Expose()
+  public image!: string;
 }
