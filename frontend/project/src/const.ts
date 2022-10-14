@@ -47,13 +47,17 @@ export enum APIRoute {
   TicketsNew = '/offers/bundles/new',
   TicketsDiscussed = 'offers/bundles/discussed',
   Comments = '/comments',
-  Registration = '/register',
-  Login = '/login',
-  Logout = '/logout',
+  Users = '/users',
+  Registration = '/users/register',
+  Login = '/users/login',
+  Logout = '/users/logout',
 }
 
 export enum HTTP_CODE {
+  OK = 200,
+  CREATED = 201,
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
+  CONFLICT = 409,
 }
