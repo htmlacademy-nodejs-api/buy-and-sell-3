@@ -1,0 +1,14 @@
+.spinner__block {
+  position: fixed;
+  left: 45%;
+  top: 45%;
+  width: 150px;
+  height: 150px;
+  animation: rotate 1s infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}

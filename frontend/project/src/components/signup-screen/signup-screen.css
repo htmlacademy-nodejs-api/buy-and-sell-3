@@ -1,0 +1,4 @@
+.form__field input[type=password] {
+  font-size: 16px;
+  letter-spacing: 0;
+}
