@@ -5,12 +5,16 @@ import asyncHandler from 'express-async-handler';
 import {LoggerInterface} from '../logger/logger.interface.js';
 import {RouteInterface} from '../../types/route.interface.js';
 import {ControllerInterface} from './controller.interface.js';
+import {ConfigInterface} from '../config/config.interface.js';
 
 @injectable()
 export abstract class Controller implements ControllerInterface {
   private readonly _router: Router;
 
-  constructor(protected readonly logger: LoggerInterface) {
+  constructor(
+    protected readonly logger: LoggerInterface,
+    protected readonly configService: ConfigInterface
+  ) {
     this._router = Router();
   }
 
