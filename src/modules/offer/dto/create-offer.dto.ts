@@ -13,9 +13,6 @@ export default class CreateOfferDto {
   @IsDateString({}, {message: 'postDate must be valid ISO date'})
   public postDate!: Date;
 
-  @MaxLength(256, {message: 'Too short for field «image»'})
-  public image!: string;
-
   @IsEnum(OfferType, {message: 'type must be Buy and Sell'})
   public type!: OfferType;
 
