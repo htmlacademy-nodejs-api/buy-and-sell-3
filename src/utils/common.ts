@@ -1,9 +1,10 @@
 import * as jose from 'jose';
 import crypto from 'crypto';
-import {plainToInstance} from 'class-transformer';
-import {ClassConstructor} from 'class-transformer/types/interfaces/class-constructor.type.js';
+import {plainToInstance, ClassConstructor} from 'class-transformer';
+import {ValidationError} from 'class-validator';
 import { OfferType } from '../types/offer-type.enum.js';
 import { Offer } from '../types/offer.type.js';
+import {ValidationErrorField} from '../types/validation-error-field.type';
 
 export const createOffer = (row: string) => {
   const tokens = row.replace('\n', '').split('\t');
@@ -42,3 +43,11 @@ export const createJWT = async (algoritm: string, jwtSecret: string, payload: ob
     .setIssuedAt()
     .setExpirationTime('2d')
     .sign(crypto.createSecretKey(jwtSecret, 'utf-8'));
+
+export const transformErrors = (errors: ValidationError[]): ValidationErrorField[] =>
+  errors.map(({property, value, constraints}) => ({
+    property,
+    value,
+    messages: constraints ? Object.values(constraints) : []
+  }));
+
